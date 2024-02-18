@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"time"
 
@@ -15,35 +16,34 @@ type Credentials struct {
 
 func Login_handler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		http.Error(w, "Metodo no permitido", http.StatusMethodNotAllowed)
 		return
 	}
 
-	var creds Credentials
-	err := json.NewDecoder(r.Body).Decode(&creds)
+	var credencial Credentials
+	err := json.NewDecoder(r.Body).Decode(&credencial)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		http.Error(w, "Error: No se convertido la solicitud HTTP a formato JSON", http.StatusBadRequest)
 		return
 	}
 
-	if creds.Usuario == "" || creds.Clave == "" {
+	if credencial.Usuario == "" || credencial.Clave == "" {
 		http.Error(w, "Los atributos 'usuario' y 'clave' son obligatorios", http.StatusBadRequest)
 		return
 	}
 
-	token := jwt.New(jwt.SigningMethodES256)
+	token := jwt.New(jwt.SigningMethodHS256)
 	claims := token.Claims.(jwt.MapClaims)
-	claims["usuario"] = creds.Usuario
+	claims["sub"] = credencial.Usuario
 	claims["exp"] = time.Now().Add(time.Hour).Unix()
 	claims["iss"] = "ingesis.uniquindio.edu.co"
 
 	tokenString, err := token.SignedString([]byte("contraseña"))
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, "Error al firmar el token", http.StatusInternalServerError)
 		return
 	}
 
-	// Responder con el token JWT
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(map[string]string{"token": tokenString})
+	w.Header().Set("Content-Type", "text/plain")
+	fmt.Fprint(w, tokenString)
 }
