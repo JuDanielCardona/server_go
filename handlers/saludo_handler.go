@@ -5,7 +5,8 @@ import (
 	"net/http"
 )
 
-func Saludo_handler(w http.ResponseWriter, r *http.Request) {
+// Poner nombre Saludo_handler para probar punto 1
+func Saludo_handler_handler(w http.ResponseWriter, r *http.Request) {
 
 	username := r.URL.Query().Get("nombre")
 

@@ -38,7 +38,7 @@ func Login_handler(w http.ResponseWriter, r *http.Request) {
 	claims["exp"] = time.Now().Add(time.Hour).Unix()
 	claims["iss"] = "ingesis.uniquindio.edu.co"
 
-	tokenString, err := token.SignedString([]byte("contraseña"))
+	tokenString, err := token.SignedString([]byte("12345"))
 	if err != nil {
 		http.Error(w, "Error al firmar el token", http.StatusInternalServerError)
 		return
