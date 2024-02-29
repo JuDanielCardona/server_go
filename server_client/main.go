@@ -18,6 +18,7 @@ type Credentials struct {
 
 func main() {
 
+	//SERVER_URL := os.Getenv("SERVER_URL")
 	SERVER_URL := "http://localhost:80"
 	User := generate(10)
 	Pass := generate(32)
