@@ -20,7 +20,7 @@ func main() {
 
 	//SERVER_URL := os.Getenv("SERVER_URL")
 	//SERVER_URL := "http://localhost:8080"
-	SERVER_URL := "http://172.17.0.2:8080"
+	SERVER_URL := "http://172.18.0.11:8080"
 	User := generate(10)
 	Pass := generate(32)
 	fmt.Println("\nUser: " + User +

@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  server_go:
+    build:
+      context: ./server_go
+    ports:
+      - "8080:8080"
+    container_name: server_go
+    networks:
+      net_server_go:
+        ipv4_address: 172.18.0.11
+
+  server_client:
+    build:
+      context: ./server_client
+    ports:
+      - "80:80"
+    container_name: server_client
+    networks:
+      net_server_go:
+        ipv4_address: 172.18.0.10
+
+networks:
+  net_server_go:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.18.0.0/16
