@@ -8,9 +8,11 @@ WORKDIR /app
 COPY . .
 
 # Expone el puerto 80 en el contenedor
-EXPOSE 80
+EXPOSE 8080
 
 ENTRYPOINT [ "go" ]
 
 # Define el comando de inicio
 CMD ["run", "./main.go"]
+
+# Crear imagen con cd server_go y docker build -t server_go .
