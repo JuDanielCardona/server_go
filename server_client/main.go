@@ -8,6 +8,7 @@ import (
 	"log"
 	"math/rand"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -18,9 +19,7 @@ type Credentials struct {
 
 func main() {
 
-	//SERVER_URL := os.Getenv("SERVER_URL")
-	//SERVER_URL := "http://localhost:8080"
-	SERVER_URL := "http://172.18.0.11:8080"
+	SERVER_URL := os.Getenv("SERVER_URL")
 	User := generate(10)
 	Pass := generate(32)
 	fmt.Println("\nUser: " + User +
