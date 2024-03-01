@@ -17,9 +17,8 @@ services:
     ports:
       - "80:80"
     container_name: server_client
-    networks:
-      net_server_go:
-        ipv4_address: 172.18.0.10
+    environment:
+      - SERVER_URL=http://server_go:8080
 
 networks:
   net_server_go:
